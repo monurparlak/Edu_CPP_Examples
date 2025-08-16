@@ -10,6 +10,6 @@ Standard-Driven: Answers are backed by direct references to the latest C++23 sta
 
 Consistent and Clear: Uniform formatting across questions guarantees a smooth and structured learning experience.
 
-Interview Ready: Sharpen your skills on nuanced topics like overload resolution, template specialization, object construction, and more — perfect for technical interviews.
+Interview Ready: Sharpen your skills on nuanced topics like overload resolution, template specialization, object construction, and more perfect for technical interviews.
 
 Feel free to explore, fork, and contribute! Your additions, corrections, and enhancements are highly welcome to enrich this growing knowledge base.
