@@ -8,7 +8,7 @@ Learn by Example: Dive into real-world quiz questions with executable code and d
 
 Standard-Driven: Answers are backed by direct references to the latest C++23 standard, ensuring accuracy and up-to-date knowledge.
 
-Consistent & Clear: Uniform formatting across questions guarantees a smooth and structured learning experience.
+Consistent and Clear: Uniform formatting across questions guarantees a smooth and structured learning experience.
 
 Interview Ready: Sharpen your skills on nuanced topics like overload resolution, template specialization, object construction, and more — perfect for technical interviews.
 
