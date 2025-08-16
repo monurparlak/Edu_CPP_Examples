@@ -10,41 +10,48 @@ My Answer:
 ✅ Output: BA
 
 Reason:
-- Class C has two data members: b (type B) and a (type A).
-- Even though the constructor initializer list writes a() then b(),
-  the actual construction order is determined by member declaration order.
-- Members are constructed in the order they are declared in the class,
-  and destroyed in reverse order.
-- Here, b is declared before a, so B's constructor runs first → prints B.
-- Then A's constructor runs → prints A.
-- Combined output: BA.
+Step-by-step:
+
+1. `C()` constructor is called.
+   - Member variables are initialized in the order of declaration in the class,
+     not in the order listed in the initializer list.
+
+2. `class C` members:
+   - `B b;` is declared first → B's constructor runs → prints "B".
+   - `A a;` is declared second → A's constructor runs → prints "A".
+
+3. Concatenate the outputs: "BA".
 
 If Wrong:
-To output AB, declare a before b in the class definition.
+- If you expected "AB": you might think initializer list order matters,
+  but **member declaration order always determines initialization order**.
+- If you answered "compile error": the code is valid, no error occurs.
 
 Reference:
-C++23 §11.9.3 — Order of initialization of class members
+- C++23 §11.9.4.6 — Member initializer list and initialization order
 */
+  
+/* Actual Program Code: */
 
 #include <iostream>
 
 struct A {
-    A() { std::cout << "A"; }
+  A() { std::cout << "A"; }
 };
 struct B {
-    B() { std::cout << "B"; }
+  B() { std::cout << "B"; }
 };
 
 class C {
 public:
-    C() : a(), b() {}
+  C() : a(), b() {}
 
 private:
-    B b;
-    A a;
+  B b;
+  A a;
 };
 
 int main()
 {
-    C(); // prints BA
+    C();
 }

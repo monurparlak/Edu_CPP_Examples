@@ -1,5 +1,5 @@
 /*
-Question #2
+Question #1
 Difficulty: 2
 Source: CPP Quiz
 
@@ -7,36 +7,44 @@ Question:
 According to the C++23 standard, what is the output of this program?
 
 My Answer:
-✅ Output: 12
+✅ Output: 1
 
 Reason:
-- "foo" is a string literal of type const char[4].
-- It can convert to std::string (implicit constructor) or to const void*.
-- Overload resolution prefers std::string match over const void*.
-- So f(const std::string&) is chosen → prints 1.
-- bar is of type const char*.
-- It can match const void* directly, or std::string via constructor.
-- Pointer conversion to const void* is ranked higher than to class type here.
-- So f(const void*) is chosen → prints 2.
-- Combined output: 12.
+Step-by-step:
+
+1. `int i = 42;`
+   - `i` is a non-const lvalue of type `int`.
+
+2. `f(i);`
+   - Candidate functions:
+     - `template <class T> void f(T &i)` → deduces `T = int`, exact match.
+     - `template <> void f(const int &i)` → requires binding to const int&, 
+       allowed but not a better match than exact int&.
+
+3. Overload resolution:
+   - Exact match (`int&`) is preferred over binding to `const int&`.
+   - So `f(T&)` is called → prints "1".
+
+Concatenate (Final Result): "1"
 
 If Wrong:
-To force both calls to f(const std::string&):
-    f(std::string("foo"));
-    f(std::string(bar));
+- If you answered "2": specialization is not always stronger. `int&` is preferred.
+- If you answered "compile error": both overloads are valid, no error occurs.
+- If you answered "undefined/unspecified": overload resolution is unambiguous.
 
 Reference:
-C++23 §12.2.4.2 — Overload resolution and standard conversions
+- C++23 §13.10.3.2 — Overload resolution rules
+- C++23 §13.7.7 — Explicit specialization rules
 */
 
-#include <iostream>
-#include <string>
+/* Actual Program Code: */
 
-void f(const std::string &) { std::cout << 1; }
-void f(const void *)        { std::cout << 2; }
+#include <iostream>
+
+template <class T> void f(T &i) { std::cout << 1; }
+template <> void f(const int &i) { std::cout << 2; }
 
 int main() {
-    f("foo"); // calls f(const std::string&) → prints 1
-    const char *bar = "bar";
-    f(bar);   // calls f(const void*) → prints 2
+  int i = 42;
+  f(i);
 }

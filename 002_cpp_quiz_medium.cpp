@@ -10,24 +10,35 @@ My Answer:
 ✅ Output: 12
 
 Reason:
-- "foo" is a string literal of type const char[4].
-- It can convert to std::string (implicit constructor) or to const void*.
-- Overload resolution prefers std::string match over const void*.
-- So f(const std::string&) is chosen → prints 1.
-- bar is of type const char*.
-- It can match const void* directly, or std::string via constructor.
-- Pointer conversion to const void* is ranked higher than to class type here.
-- So f(const void*) is chosen → prints 2.
-- Combined output: 12.
+Step-by-step:
+
+1. `f("foo");`
+   - "foo" is a string literal of type const char[4].
+   - It can convert to std::string (via constructor) or const void*.
+   - f(const std::string&) is preferred because converting to string
+     is better than converting to const void*.
+   - Prints "1".
+
+2. `const char *bar = "bar"; f(bar);`
+   - bar is const char*.
+   - Can convert to std::string or const void*.
+   - No user-defined conversion is better than exact pointer match.
+   - f(const void*) is chosen → prints "2".
+
+Concatenate (Final Result): "12"
 
 If Wrong:
-To force both calls to f(const std::string&):
-    f(std::string("foo"));
-    f(std::string(bar));
+- If you answered "11": you assumed both calls convert to std::string.
+  The second call prefers exact pointer match.
+- If you answered "22": wrong, first call prefers std::string.
+- If you answered "compile error": all overloads are valid.
 
 Reference:
-C++23 §12.2.4.2 — Overload resolution and standard conversions
+- C++23 §13.3.3 — Overload resolution and ranking of conversions
+- C++23 §12.2.2 — Standard conversions and user-defined conversions
 */
+
+/* Actual Program Code: */
 
 #include <iostream>
 #include <string>
@@ -36,7 +47,7 @@ void f(const std::string &) { std::cout << 1; }
 void f(const void *)        { std::cout << 2; }
 
 int main() {
-    f("foo"); // calls f(const std::string&) → prints 1
-    const char *bar = "bar";
-    f(bar);   // calls f(const void*) → prints 2
+  f("foo");
+  const char *bar = "bar";
+  f(bar);
 }

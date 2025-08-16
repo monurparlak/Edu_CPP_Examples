@@ -10,27 +10,38 @@ My Answer:
 ✅ Output: 1
 
 Reason:
-- The literal -2.5 is of type double.
-- Overload resolution will try standard conversions for both candidates.
-- Converting double to int is a standard floating-integral conversion.
-- Converting double to unsigned is also a standard conversion but may
-  involve modulo wrap for negatives, which is less desirable in ranking.
-- Both are standard conversions, but the signed int version is preferred.
-- So f(int) is chosen → prints 1.
+Step-by-step:
+
+1. `f(-2.5);`
+   - The argument is a double literal (-2.5).
+   - Candidate functions:
+     - `f(int)` requires a standard conversion from double → int.
+     - `f(unsigned)` requires double → unsigned conversion.
+
+2. Overload resolution:
+   - Both conversions are standard conversions.
+   - Signed int conversion is preferred over unsigned for negative numbers.
+
+3. So `f(int)` is called → prints "1".
+
+Concatenate (Final Result): "1"
 
 If Wrong:
-Explicitly cast to unsigned to call the other overload:
-    f(static_cast<unsigned>(-2.5)); // would print 2
+- If you answered "2": you assumed unsigned is preferred, but signed int is
+  chosen because the value is negative.
+- If you answered "compile error": both overloads are valid, no error occurs.
 
 Reference:
-C++23 §12.2.4.2 — Overload resolution and conversion ranking
+- C++23 §13.3.3 — Overload resolution and ranking of conversions
 */
+  
+/* Actual Program Code: */
 
 #include <iostream>
 
-void f(int)      { std::cout << 1; }
+void f(int) { std::cout << 1; }
 void f(unsigned) { std::cout << 2; }
 
 int main() {
-    f(-2.5); // calls f(int) → prints 1
+  f(-2.5);
 }
