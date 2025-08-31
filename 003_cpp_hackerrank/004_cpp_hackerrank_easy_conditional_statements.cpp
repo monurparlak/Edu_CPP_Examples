@@ -8,7 +8,7 @@ Objective:
 - This challenge teaches how to use **if, else if, else** statements.
 - Depending on the value of a positive integer 'n':
     1. If 1 <= n <= 9, print the corresponding English word in lowercase.
-    2. If n > 9, print "Greater than 9".
+    2. If n > 9, print "Greater than 9"
 
 --------------------------------------------------------------------------------
 Concepts Covered:
