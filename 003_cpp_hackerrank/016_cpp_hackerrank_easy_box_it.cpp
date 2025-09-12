@@ -15,7 +15,7 @@ Concepts Covered:
    class Box {
        private:
            int l, b, h;
-       public:
+       public: 
            Box();
            Box(int length, int breadth, int height);
            Box(const Box& B);
