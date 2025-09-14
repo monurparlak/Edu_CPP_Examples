@@ -6,7 +6,7 @@ This C++ program demonstrates custom exception handling for username validation.
 It defines a user-defined exception class BadLengthException, which stores the
 length of a too-short username and allows reporting it via the what() method.
 
-The function checkUsername checks the username rules:
+The function checkUsername checks the username rules: 
 - Must be at least 5 characters long.
 - Must not contain "ww" consecutively.
 
